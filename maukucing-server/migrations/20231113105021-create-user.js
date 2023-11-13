@@ -12,6 +12,7 @@ module.exports = {
       username: {
         type: Sequelize.STRING,
         allowNull : false,
+        unique : true,
         validate : {
           notEmpty : {
             args : true,
@@ -26,6 +27,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull : false,
+        unique : true,
         validate : {
         notEmpty : {
           args : true,

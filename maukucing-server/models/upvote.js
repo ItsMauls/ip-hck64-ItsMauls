@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey : 'userId',
         as : 'user'
       })
-      Upvote.belongsTo(models.Posts, {
+      Upvote.belongsTo(models.Post, {
         foreignKey : 'postId',
         as : 'post'
       })
