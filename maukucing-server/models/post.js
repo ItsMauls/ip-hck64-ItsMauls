@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey : 'postId',
         as : 'comment'
       })
-      Post.hasMany(models.Like, {
+      Post.hasMany(models.Upvote, {
         foreignKey : 'postId',
         as : 'like'
       })
@@ -29,10 +29,14 @@ module.exports = (sequelize, DataTypes) => {
   Post.init({
     caption: DataTypes.STRING,
     imageUrl: DataTypes.STRING,
+    upvotesCount : {
+      type : DataTypes.INTEGER,
+      defaultValue : 0
+    },
     userId: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Users', // nama tabel yang dirujuk
+        model: 'Users',
         key: 'id'
       },
       onUpdate: 'CASCADE',

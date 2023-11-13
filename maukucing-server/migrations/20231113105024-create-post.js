@@ -9,6 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      upvotesCount : {
+        type : Sequelize.INTEGER,
+        defaultValue : 0
+      },
       caption: {
         type: Sequelize.STRING,
         allowNull : false,

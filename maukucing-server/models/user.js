@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey : 'userId',
           as : 'post'
         })
-      User.hasMany(models.Likes, {
+      User.hasMany(models.Upvote, {
         foreignKey : 'userId',
         as : 'likes'
       })
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey : 'userId',
         as : 'comments'
       })
-      User.hasMany(models.Cat, {
+      User.hasMany(models.Cats, {
         foreignKey : 'userId',
         as : 'cats'
       })
