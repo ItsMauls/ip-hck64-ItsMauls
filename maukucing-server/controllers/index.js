@@ -52,54 +52,57 @@ module.exports = class Index {
         }
     }
     
-    static async postArticle(req,res,next) {
+    static async createPost(req,res,next) {
         try {
             const body = req.body
+            console.log(req.body.caption);
+            const imageUrl = req.user.uploadedImgUrl
             body.userId = req.user.id
-            const newData = await Article.create(body)
+    
+            const newData = await Post.create({...imageUrl, body})
+          
             res.status(201).json(newData)
         } catch (error) {
+            console.log(error.message);
             next(error)
         }
     }
 
-    static async updateArticle(req,res,next) {
+    static async updatePost(req,res,next) {
         try {
             const { id } = req.params
-            const {title, content, categoryId, authorId} = req.body
-            const selectedArticle = await Article.findByPk(id)
+            
+            const {caption} = req.body
+            const imageUrl = req.user.uploadedImgUrl
+            const selectedPost = await Article.findByPk(id)
+
             const body = {
-                title,
-                content,
-                categoryId,
-                authorId
+                caption
             }
-            if(!selectedArticle) {
+
+            if(!selectedPost) {
                 throw {name : 'NotFoundError', id}
             }
-            if(!title) {
+
+            if(!caption) {
                 throw {name : 'RequestBodyNotFound'}
             }
-            if(!content) {
-                throw {name : 'RequestBodyNotFound'}
-            }
-           
-            if(!categoryId) {
-                throw {name : 'RequestBodyNotFound'}
-            }
-            if(!authorId) {
+
+            if(!imageUrl) {
                 throw {name : 'RequestBodyNotFound'}
             }
            
-            await Article.update(body, {
+           
+           
+            await Article.update({body, ...imageUrl}, {
                 where : {
                     id : id
                 }
             })
             
-            const updatedArticle = await Article.findByPk(id)
+            const updatedPost = await Article.findByPk(id)
             
-            res.status(200).json(updatedArticle)
+            res.status(200).json(updatedPost)
         } catch (error) {
             next(error)
             
@@ -122,27 +125,5 @@ module.exports = class Index {
             next(error)
         }
     }
-    static async patchUpvote(req,res,next) {
-        try {
-            const findByPk = await Article.findByPk(id)
-            // const imgUrl = req.user.uploadedImgUrl
-            // const { id } = req.params
     
-            // if(!findByPk) {
-            //     throw {name : 'NotFoundError', id}
-            // }
-            // if(!imgUrl) {
-            //     throw {name : 'RequestBodyNotFound'}
-            // }
-            // await Article.update({imgUrl : imgUrl}, {
-            //     where : {
-            //         id : id
-            //     }
-            // })
-            // const updatedImageUrl = await Article.findByPk(id)
-            // res.status(200).json(updatedImageUrl)
-        } catch (error) {
-            next(error)
-        }
-    }
 }

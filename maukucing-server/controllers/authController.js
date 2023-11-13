@@ -1,6 +1,10 @@
+
+const { compareToHashPassword, encryptedPw } = require('../helpers/bcrypt.js');
 const htmlFormat = require('../helpers/htmlFormat.js');
+const { signToken } = require('../helpers/jwt.js');
 const {User} = require('../models/index.js')
 const { createTransport } = require('nodemailer');
+
 
 
 module.exports = class AuthController {
@@ -29,7 +33,7 @@ module.exports = class AuthController {
             const access_token = signToken({id : user.id})
             res.status(200).json({access_token : access_token})
         } catch (error) {
-    
+            console.log(error.message);
             next(error)
         }
     }
@@ -44,9 +48,9 @@ module.exports = class AuthController {
                     pass: "RgdKhwT8tCFQUJHm",
                 },
               });
-
-            const {email, password, username} = req.body
-            const data = await User.create({email, password, username})
+              const {email, password, username} = req.body
+              const encPw = encryptedPw(password)
+            const data = await User.create({email, password : encPw, username})
 
             await transporter.sendMail({
                 from: 'maukucing@yuhuuu.com',
@@ -57,6 +61,7 @@ module.exports = class AuthController {
 
             res.status(201).json(data)
         } catch (error) {
+            console.log(error.message);
             next(error)
         }
     
