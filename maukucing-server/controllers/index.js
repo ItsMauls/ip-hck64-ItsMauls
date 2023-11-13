@@ -55,11 +55,12 @@ module.exports = class Index {
     static async createPost(req,res,next) {
         try {
             const body = req.body
-            console.log(req.body.caption);
+     
             const imageUrl = req.user.uploadedImgUrl
             body.userId = req.user.id
-    
-            const newData = await Post.create({...imageUrl, body})
+            body.imageUrl = imageUrl
+      
+            const newData = await Post.create(body)
           
             res.status(201).json(newData)
         } catch (error) {
@@ -71,13 +72,14 @@ module.exports = class Index {
     static async updatePost(req,res,next) {
         try {
             const { id } = req.params
-            
             const {caption} = req.body
-            const imageUrl = req.user.uploadedImgUrl
+            const updateImageUrl = req.user.uploadedImgUrl
+            body.imageUrl = imageUrl
             const selectedPost = await Article.findByPk(id)
 
             const body = {
-                caption
+                caption,
+                imageUrl : updateImageUrl
             }
 
             if(!selectedPost) {
@@ -94,7 +96,7 @@ module.exports = class Index {
            
            
            
-            await Article.update({body, ...imageUrl}, {
+            await Article.update({body}, {
                 where : {
                     id : id
                 }
