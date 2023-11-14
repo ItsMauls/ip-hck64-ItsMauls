@@ -1,4 +1,4 @@
-const {User, Post, Upvote} = require('../models/index')
+const {User, Post, Upvote, Comment} = require('../models/index')
 
 module.exports = class Index {
     static async getPosts(req,res,next) {
@@ -138,7 +138,7 @@ module.exports = class Index {
             
                 await Post.decrement('upvotesCount', {where : {id : postId}}) 
 
-            res.status(200).json({msg : 'ada'})
+            res.status(200).json({msg : 'Post downvoted!'})
     }
 
     static async likePost(req,res,next) {
@@ -151,18 +151,33 @@ module.exports = class Index {
                 defaults : {postId , userId}
             })
             
-            
             if(created) {
                 await Post.increment('upvotesCount', {where : {id : postId}})
-            }
-            
+            }       
 
-            res.status(200).json({msg : 'ada'})
+            res.status(200).json({msg : 'Post upvoted!'})
         } catch (error) {
             console.log(error.message);
             next(error)
         }
 
+    }
+
+    static async commentPost(req,res,next) {
+        try {
+            const {postId} = req.params
+            const userId = req.user.id
+            let body = req.body
+            body.postId = postId
+            body.userId = userId
+            
+            const comment = await Comment.create(body)
+
+            res.status(201).json(comment)
+        } catch (error) {
+            console.log(error.message);
+            next(error)
+        }
     }
     
 }
