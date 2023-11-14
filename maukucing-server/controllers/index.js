@@ -1,4 +1,4 @@
-const {User, Post} = require('../models/index')
+const {User, Post, Upvote} = require('../models/index')
 
 module.exports = class Index {
     static async getPosts(req,res,next) {
@@ -42,11 +42,11 @@ module.exports = class Index {
         try {
             const { id } = req.params
     
-            const selectedArticle = await Post.findByPk(id)
-            if(!selectedArticle) {
+            const selectedPost = await Post.findByPk(id)
+            if(!selectedPost) {
                 throw {name : 'NotFoundError', id}
             }
-            res.status(200).json(selectedArticle)
+            res.status(200).json(selectedPost)
         } catch (error) {
             next(error)
         }
@@ -117,7 +117,7 @@ module.exports = class Index {
             if(!findByPk) {
                 throw {name : 'NotFoundError', id}
             }
-            await Article.destroy({
+            await Post.destroy({
                 where : {
                     id : id
                 }
@@ -126,6 +126,43 @@ module.exports = class Index {
         } catch (error) {
             next(error)
         }
+    }
+
+    static async undoLike(req,res,next) {
+        const {postId} = req.params
+            const userId = req.user.id
+            
+            await Upvote.destroy({
+                where : {postId, userId}
+            })
+            
+                await Post.decrement('upvotesCount', {where : {id : postId}}) 
+
+            res.status(200).json({msg : 'ada'})
+    }
+
+    static async likePost(req,res,next) {
+        try {
+            const {postId} = req.params
+            const userId = req.user.id
+            
+            const [existing, created] =  await Upvote.findOrCreate({
+                where : {postId, userId},
+                defaults : {postId , userId}
+            })
+            
+            
+            if(created) {
+                await Post.increment('upvotesCount', {where : {id : postId}})
+            }
+            
+
+            res.status(200).json({msg : 'ada'})
+        } catch (error) {
+            console.log(error.message);
+            next(error)
+        }
+
     }
     
 }
