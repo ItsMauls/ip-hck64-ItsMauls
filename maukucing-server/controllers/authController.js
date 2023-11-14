@@ -1,6 +1,11 @@
+
+const { compareToHashPassword, encryptedPw } = require('../helpers/bcrypt.js');
 const htmlFormat = require('../helpers/htmlFormat.js');
+const { signToken } = require('../helpers/jwt.js');
 const {User} = require('../models/index.js')
 const { createTransport } = require('nodemailer');
+require('dotenv').config()
+
 
 
 module.exports = class AuthController {
@@ -27,9 +32,10 @@ module.exports = class AuthController {
                 throw {name : 'AuthError'}
             }
             const access_token = signToken({id : user.id})
+            console.log(access_token);
             res.status(200).json({access_token : access_token})
         } catch (error) {
-    
+            console.log(error.message);
             next(error)
         }
     }
@@ -40,13 +46,13 @@ module.exports = class AuthController {
                 host: "smtp-relay.brevo.com",
                 port: 587,
                 auth: {
-                    user: "maulputra09@gmail.com",
-                    pass: "RgdKhwT8tCFQUJHm",
+                    user: process.env.DEV_EMAIL,
+                    pass: process.env.DEV_PASS,
                 },
               });
-
-            const {email, password, username} = req.body
-            const data = await User.create({email, password, username})
+              const {email, password, username} = req.body
+              const encPw = encryptedPw(password)
+            const data = await User.create({email, password : encPw, username})
 
             await transporter.sendMail({
                 from: 'maukucing@yuhuuu.com',
@@ -57,6 +63,7 @@ module.exports = class AuthController {
 
             res.status(201).json(data)
         } catch (error) {
+            console.log(error.message);
             next(error)
         }
     

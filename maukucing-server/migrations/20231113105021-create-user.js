@@ -29,6 +29,7 @@ module.exports = {
         allowNull : false,
         unique : true,
         validate : {
+        isEmail : true,
         notEmpty : {
           args : true,
           msg : 'Email is required!'
