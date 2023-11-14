@@ -4,6 +4,7 @@ const htmlFormat = require('../helpers/htmlFormat.js');
 const { signToken } = require('../helpers/jwt.js');
 const {User} = require('../models/index.js')
 const { createTransport } = require('nodemailer');
+require('dotenv').config()
 
 
 
@@ -31,6 +32,7 @@ module.exports = class AuthController {
                 throw {name : 'AuthError'}
             }
             const access_token = signToken({id : user.id})
+            console.log(access_token);
             res.status(200).json({access_token : access_token})
         } catch (error) {
             console.log(error.message);
@@ -44,8 +46,8 @@ module.exports = class AuthController {
                 host: "smtp-relay.brevo.com",
                 port: 587,
                 auth: {
-                    user: "maulputra09@gmail.com",
-                    pass: "RgdKhwT8tCFQUJHm",
+                    user: process.env.DEV_EMAIL,
+                    pass: process.env.DEV_PASS,
                 },
               });
               const {email, password, username} = req.body

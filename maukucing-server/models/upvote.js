@@ -22,8 +22,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Upvote.init({
-    PostId: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER
+    postId: { 
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Posts', 
+        key: 'id'
+      }
+    },
+    userId: { 
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users', 
+        key: 'id'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Upvote',
