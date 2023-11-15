@@ -1,6 +1,10 @@
 import axios from 'axios';
+
 import {useEffect, useState} from 'react'
-import openSocket from 'socket.io-client'
+
+import {useState} from 'react'
+
+
 
 
 export const ContentForm = ({hideModal, show}) => {
@@ -48,7 +52,7 @@ useEffect(() => {
                   'Content-Type': 'multipart/form-data',
                 },
               });
-          
+
               hideModal(false)
         } catch (error) {
             console.log(error.message);
