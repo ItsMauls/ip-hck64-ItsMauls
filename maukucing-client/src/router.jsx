@@ -3,6 +3,8 @@ import MainLayout from "./components/MainLayout";
 import { MainPage } from "./pages/MainPage";
 import { LandingPage } from "./pages/LandingPage";
 import { MyPosts } from "./pages/MyPosts";
+import { CommentForm } from "./components/CommentForm";
+import { CommentSection } from "./components/CommentSection";
 
 const loader = async () => {
   if(!localStorage.access_token) return redirect('/login')
@@ -26,7 +28,7 @@ export const router = createBrowserRouter([
         path : '/myposts',
         element : < MyPosts />,
         loader
-      } 
+      }
     ]},
     {
         path : '/',

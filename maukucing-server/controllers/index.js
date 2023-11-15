@@ -183,6 +183,17 @@ module.exports = class Index {
         }
     }
 
+    static async seeComment(req,res,next) {
+        try {
+            const {postId} = req.params
+            const comment = await Comment.findAll({where : {postId}})
+
+            res.status(200).json(comment)
+        } catch (error) {
+            next(error)
+        }
+    }
+
     static async myPosts(req,res,next) {
         try {
             const data = await Post.findAll({where : {userId : req.user.id}})

@@ -8,7 +8,8 @@ export const ContentForm = ({hideModal, show}) => {
 
 useEffect(() => {
   const socket = openSocket('http://localhost:3000');
-  console.log(socket, 'poet');
+
+  
   socket.on('new-post', newPost => {
       console.log('New post received:', newPost);
       // Update state or context as needed
@@ -49,6 +50,7 @@ useEffect(() => {
                 },
               });
           
+
               hideModal(false)
         } catch (error) {
             console.log(error.message);
@@ -60,8 +62,8 @@ useEffect(() => {
       <>
       {show &&
       <form onSubmit={submitHandler}>
-      <div onClick={() => hideModal(false)} className='inset-0 bg-opacity-40 bg-black fixed'></div>
-        <div className="bg-cyan-50 fixed z-50 w-1/4 mx-auto rounded-xl mt-4">
+      <div onClick={() => hideModal(false)} className='inset-0 bg-opacity-40 flex bg-black fixed'></div>
+        <div className="bg-cyan-50 fixed z-50 w-1/4 left-2 mx-auto rounded-xl mt-4">
           <h1 className="text-xl font-bold text-center py-4 text-white rounded-t-xl bg-cyan-300"><span className='bg-red-200 px-4 ml-2 float-left rounded-full'><button onClick={() => hideModal(false)}>X</button></span>Submit Your Content</h1>
           <div className="grid grid-cols-2 gap-4 p-4">
             <img className="w-full rounded-lg shadow-lg" src="/src/assets/foto_profil.png" alt="Profile" />
