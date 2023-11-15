@@ -2,21 +2,31 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { timeFormatter } from "../../helpers/timeFormatter"
 import { InteractiveTable } from "./InteractiveTable"
+import { CommentForm } from "./CommentForm"
+import openSocket from 'socket.io-client'
 
-
-export const Content = () => {
+export const Content = ({hideCommentSection}) => {
     const [content, setContent] = useState([])
     useEffect(() => {
         const asyncFn = async () => {
             const {data} = await axios.get('http://localhost:3000/posts', {
                 headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
-            console.log(data);
+        
             setContent(data)
+            const socket = openSocket('http://localhost:3000');
+
+  
+            socket.on('new-post', newPost => {
+            console.log('New post received:', newPost);
+      
+  });
+
+  return () => socket.disconnect(); // Disconnect on cleanup
         }
         asyncFn()
     }, [])
-    console.log(content);
+ 
     return (
     <>
     
@@ -34,7 +44,10 @@ export const Content = () => {
                 <img className="rounded-xl w-5/6 mx-auto my-4 " src={val.imageUrl} alt="" />
             </div>
             </div>
-            < InteractiveTable postId={val.id} totalLike={val.upvotesCount}/>
+            < InteractiveTable hideCommentSection={hideCommentSection} postId={val.id} totalLike={val.upvotesCount}/>
+            <div className="hidden">
+            <CommentForm hideCommentSection={hideCommentSection} postId={val.id}/>
+            </div>
             </>
             )
         })}

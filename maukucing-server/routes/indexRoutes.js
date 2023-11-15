@@ -1,4 +1,4 @@
-const {getPosts, getPostById, deletePost, createPost, updatePost, likePost, undoLike, commentPost, myPosts } = require('../controllers/index')
+const {getPosts, getPostById, deletePost, createPost, updatePost, likePost, undoLike, commentPost, myPosts, seeComment } = require('../controllers/index')
 const multer = require('multer')
 const imageUpload = require('../middleware/imageUpload')
 const router = require('express').Router()
@@ -17,3 +17,4 @@ router
 .patch('/undo-like-posts/:postId', undoLike)
 .post('/posts-comment/:postId', commentPost)
 .get('/myposts', myPosts)
+.get('/comments/:postId', seeComment)
