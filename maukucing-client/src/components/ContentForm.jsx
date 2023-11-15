@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {useState} from 'react'
+import openSocket from 'socket.io-client'
 
 
 export const ContentForm = ({hideModal, show}) => {
@@ -35,7 +36,7 @@ export const ContentForm = ({hideModal, show}) => {
                   'Content-Type': 'multipart/form-data',
                 },
               });
-              console.log(response.data);
+              openSocket('http://localhost:3000/posts')
               hideModal(false)
         } catch (error) {
             console.log(error.message);

@@ -23,7 +23,7 @@ app.use(authentication)
 app.use(indexRoutes)
 app.use(errorMiddleware)
 
-app.listen(3000)
-// module.exports = app
+
+module.exports = app
 
 
