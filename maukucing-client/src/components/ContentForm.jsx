@@ -1,8 +1,22 @@
 import axios from 'axios';
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
+import openSocket from 'socket.io-client'
 
 
 export const ContentForm = ({hideModal, show}) => {
+
+
+useEffect(() => {
+  const socket = openSocket('http://localhost:3000');
+  console.log(socket, 'poet');
+  socket.on('new-post', newPost => {
+      console.log('New post received:', newPost);
+      // Update state or context as needed
+  });
+
+  return () => socket.disconnect(); // Disconnect on cleanup
+}, []);
+
 
 
     const [formValue, setFormValue] = useState({
@@ -15,7 +29,6 @@ export const ContentForm = ({hideModal, show}) => {
         ...formValue,
         [name]: name === 'imageUrl' ? files[0] : value,
         });
-        console.log(name,value);
     }
 
   
@@ -27,15 +40,15 @@ export const ContentForm = ({hideModal, show}) => {
             
             formData.append('caption', formValue.caption);
             formData.append('imageUrl', formValue.imageUrl);
-            console.log(formValue);
+ 
 
-            const response = await axios.post('http://localhost:3000/posts', formData, {
+            await axios.post('http://localhost:3000/posts', formData, {
                 headers: {
                   Authorization: `Bearer ${localStorage.access_token}`,
                   'Content-Type': 'multipart/form-data',
                 },
               });
-              console.log(response.data);
+          
               hideModal(false)
         } catch (error) {
             console.log(error.message);
