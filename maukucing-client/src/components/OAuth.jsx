@@ -1,33 +1,33 @@
 import axios from 'axios';
-import { GoogleOAuthProvider, useGoogleLogin, GoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 
-const OAuthButton = () => {
+// const OAuthButton = () => {
     
-    const googleLogin = useGoogleLogin({
-        onSuccess: async (codeResponse) => {
-            try {
-                console.log(codeResponse);
-                // Memanggil backend dengan token ID Google
-                const {data} = await axios.post('http://localhost:3000/auth/google/callback', {
-                    code: codeResponse.access_token, // Send code, not access token
-                });
-                // Simpan token dari server ke local storage atau state management
-                localStorage.setItem('access_token', data.token);
-                // navigate('/posts')
-            } catch (error) {
-                console.error('Login failed:', error.message);
-            }
-        },
-        onError: (error) => {
-            console.log(error)
-            // console.error('Login failed:', error);
-        },
-        flow: 'implicit'
-    });
+//     const googleLogin = useGoogleLogin({
+//         onSuccess: async (codeResponse) => {
+//             try {
+//                 console.log(codeResponse);
+//                 // Memanggil backend dengan token ID Google
+//                 const {data} = await axios.post('http://localhost:3000/auth/google/callback', {
+//                     code: codeResponse.access_token, // Send code, not access token
+//                 });
+//                 // Simpan token dari server ke local storage atau state management
+//                 localStorage.setItem('access_token', data.token);
+//                 // navigate('/posts')
+//             } catch (error) {
+//                 console.error('Login failed:', error.message);
+//             }
+//         },
+//         onError: (error) => {
+//             console.log(error)
+//             // console.error('Login failed:', error);
+//         },
+//         flow: 'implicit'
+//     });
     
-    return (<><button className='flex items-center px-2'  onClick={() =>googleLogin()}><span><img  src="src/assets/google.png" className='w-14 ' alt="" /></span>Continue With Google</button></>)
-}
+//     return (<><button className='flex items-center px-2'  onClick={() =>googleLogin()}><span><img  src="src/assets/google.png" className='w-14 ' alt="" /></span>Continue With Google</button></>)
+// }
 
 export const GoogleButton = () => {
     const navigate = useNavigate()
