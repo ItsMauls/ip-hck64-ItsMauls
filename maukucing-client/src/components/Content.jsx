@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { timeFormatter } from "../../helpers/timeFormatter"
+import { InteractiveTable } from "./InteractiveTable"
 
 
 export const Content = () => {
@@ -22,7 +23,7 @@ export const Content = () => {
     <div className="bg-blue-500 w-2/3 mr-4 mt-4 rounded-xl float-right items-center mx-auto">
     
         {content.map(val => {
-            return(
+            return (
             <>
             <div className="mx-4 py-4">
             <h1 className="text-gray-200 block">Created at : {timeFormatter(val.createdAt)}</h1>
@@ -30,9 +31,10 @@ export const Content = () => {
             
             <div>
             
-                <img className="rounded-xl w-5/6 mx-auto my-4" src={val.imageUrl} alt="" />
+                <img className="rounded-xl w-5/6 mx-auto my-4 " src={val.imageUrl} alt="" />
             </div>
             </div>
+            < InteractiveTable postId={val.id}/>
             </>
             )
         })}

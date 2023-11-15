@@ -1,11 +1,12 @@
+require('dotenv').config()
+
 
 const { compareToHashPassword, encryptedPw } = require('../helpers/bcrypt.js');
 const htmlFormat = require('../helpers/htmlFormat.js');
 const { signToken } = require('../helpers/jwt.js');
-const {User} = require('../models/index.js')
+const { User } = require('../models/index.js')
 const { createTransport } = require('nodemailer');
-require('dotenv').config()
-
+const passport = require('passport')
 
 
 module.exports = class AuthController {
@@ -32,10 +33,8 @@ module.exports = class AuthController {
                 throw {name : 'AuthError'}
             }
             const access_token = signToken({id : user.id})
-            console.log(access_token);
             res.status(200).json({access_token : access_token})
         } catch (error) {
-            console.log(error.message);
             next(error)
         }
     }
@@ -67,5 +66,14 @@ module.exports = class AuthController {
             next(error)
         }
     
+    }
+    
+    static async googleLogin(req,res,next) {
+        try {
+
+              res.status(200).json()
+        } catch (error) {
+            console.log(error, 'error func');
+        }
     }
 }

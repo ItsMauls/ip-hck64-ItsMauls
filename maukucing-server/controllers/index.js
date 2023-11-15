@@ -131,14 +131,17 @@ module.exports = class Index {
     static async undoLike(req,res,next) {
         const {postId} = req.params
             const userId = req.user.id
-            
-            await Upvote.destroy({
-                where : {postId, userId}
-            })
-            
-                await Post.decrement('upvotesCount', {where : {id : postId}}) 
-
-            res.status(200).json({msg : 'Post downvoted!'})
+            try {
+                await Upvote.destroy({
+                    where : {postId, userId}
+                })
+                
+                    await Post.decrement('upvotesCount', {where : {id : postId}}) 
+    
+                res.status(200).json({msg : 'Post downvoted!'})
+            } catch (error) {
+                next(error)
+            }
     }
 
     static async likePost(req,res,next) {
@@ -155,7 +158,7 @@ module.exports = class Index {
                 await Post.increment('upvotesCount', {where : {id : postId}})
             }       
 
-            res.status(200).json({msg : 'Post upvoted!'})
+            res.status(200).json(existing)
         } catch (error) {
             console.log(error.message);
             next(error)

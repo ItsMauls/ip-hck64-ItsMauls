@@ -10,8 +10,8 @@ const authentication = require('./middleware/authentication')
 const app = express()
 
 
-app.use(cors())
 app.use(express.json())
+app.use(cors())
 
 if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config()

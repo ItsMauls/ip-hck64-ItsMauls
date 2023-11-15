@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
+import { GoogleButton } from '../components/OAuth'
 
 export const LandingPage = () => {
     const [input, setInput] = useState({
@@ -60,6 +61,7 @@ export const LandingPage = () => {
             {register && <button onClick={loginHandler}>Login</button>}
             {!register && <button onClick={registerHandler}>Register</button>}
         </li>
+    
     </ul>
 </nav>
 
@@ -73,6 +75,7 @@ export const LandingPage = () => {
             <input onChange={inputHandler} name='password' className="block px-14 mx-auto rounded-lg text-center bg-orange-200 py-2 placeholder:text-white"  type="password" placeholder="Password"/>
             <button className="mx-auto bg-cyan-500 flex justify-center items-center my-6 rounded-xl px-4 py-2 text-white">Register Sekarang Yuk</button>
             </form>
+            <GoogleButton/>
         </div>} 
         {!register && <div className=" bg-cyan-50 z-40 bottom-40 left-2/4 absolute mx-auto w-1/4 rounded-xl border-2 border-red-900">
             <h1 className="bg-red-100 border-b-2 text-center py-4 border-red-900 rounded-t-xl">Gerbang Untuk Menuju MauKucing</h1>
@@ -82,6 +85,7 @@ export const LandingPage = () => {
             <input onChange={inputHandler} name='password' className="block px-14 mx-auto rounded-lg text-center bg-orange-200 py-2 my-8 placeholder:text-white"  type="password" placeholder="Password"/>
             <button className="mx-auto bg-cyan-500 flex justify-center items-center my-6 rounded-xl px-4 py-2 text-white">Login Sekarang Yuk</button>
             </form>
+            <GoogleButton/>
         </div>}
         
     
