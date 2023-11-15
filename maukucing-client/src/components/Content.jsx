@@ -20,12 +20,12 @@ export const Content = () => {
     return (
     <>
     
-    <div className="bg-blue-500 w-2/3 mr-4 mt-4 rounded-xl float-right items-center mx-auto">
-    
+    <div className="bg-emerald-400 w-2/3 mr-4 mt-4 rounded-xl float-right items-center mx-auto">
+        
         {content.map(val => {
             return (
             <>
-            <div className="mx-4 py-4">
+            <div className="px-2 rounded-lg mx-4 py-4 bg-emerald-100 my-4">
             <h1 className="text-gray-200 block">Created at : {timeFormatter(val.createdAt)}</h1>
             <h1 className="float-left text-4xl mb-4">{val.caption}</h1>
             
@@ -34,7 +34,7 @@ export const Content = () => {
                 <img className="rounded-xl w-5/6 mx-auto my-4 " src={val.imageUrl} alt="" />
             </div>
             </div>
-            < InteractiveTable postId={val.id}/>
+            < InteractiveTable postId={val.id} totalLike={val.upvotesCount}/>
             </>
             )
         })}

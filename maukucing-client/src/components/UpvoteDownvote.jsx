@@ -1,15 +1,16 @@
 import axios from "axios"
+import { useState } from "react"
 
 
-export const UpvoteDownvoteButton = ({isUpvote, postId, setUpVote}) => {
+export const UpvoteDownvoteButton = ({isUpvote, postId, setUpVote, totalLike}) => {
     
     const upvote = async() => {
         const {data} = await axios.patch(`http://localhost:3000/like-posts/${postId}`, postId,{
             headers : {Authorization : `Bearer ${localStorage.access_token}`}
         })
-        console.log(data);
-        setUpVote(false)
         
+        setUpVote(false)
+        setUpdateLike(totalLike)
     }
 
     const undoUpvote = async() => {
@@ -17,11 +18,12 @@ export const UpvoteDownvoteButton = ({isUpvote, postId, setUpVote}) => {
             headers : {Authorization : `Bearer ${localStorage.access_token}`}
         })
         setUpVote(true)
+        setUpdateLike(totalLike)
     }
 
     return (
         <>
-       {isUpvote ? <button onClick={upvote}>Upvote</button> : <button onClick={undoUpvote}>Downvote</button>} 
+       {isUpvote ? <button className="py-1 my-2 rounded-lg bg-white px-4" onClick={upvote}><span>{totalLike}</span> ⬆️ Upvote</button> : <button className="rounded-lg px-4 py-1 my-2 bg-white" onClick={undoUpvote}><span>{totalLike}</span> ⬇️ Downvote</button>} 
         </>
     )
 }

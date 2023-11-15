@@ -12,9 +12,13 @@ export const MainPage = () => {
     
     return (
     <>
+    <body className="bg-red-500">
+        
+    
     < HotPost hideModal={hideModal}/>
     < Content/>
     < ContentForm hideModal={hideModal} show={show}/>
+    </body>
     </>
     )
 }

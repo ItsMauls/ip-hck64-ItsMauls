@@ -7,25 +7,25 @@ const router = require('express').Router()
 const {OAuth2Client} = require('google-auth-library');
 const { signToken } = require('../helpers/jwt')
 
-const GoogleStrategy = require('passport-google-oauth20').Strategy
+// const GoogleStrategy = require('passport-google-oauth20').Strategy
 
 
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback",
-    userProfileURL : "https://www.googleapis.com/oauth2/v3/userInfo"
-  },
-  async function (accessToken, refreshToken, profile, done) {
-    try {
+// passport.use(new GoogleStrategy({
+//     clientID: process.env.GOOGLE_CLIENT_ID,
+//     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//     callbackURL: "http://localhost:3000/auth/google/callback",
+//     userProfileURL : "https://www.googleapis.com/oauth2/v3/userInfo"
+//   },
+//   async function (accessToken, refreshToken, profile, done) {
+//     try {
         
-        console.log('da');
-    } catch (error) {
-        console.log(error.message, 'err funccccc');
-    }
-  }
+//         console.log('da');
+//     } catch (error) {
+//         console.log(error.message, 'err funccccc');
+//     }
+//   }
 
-));
+// ));
 
 module.exports = 
 router
@@ -36,8 +36,8 @@ router
 //login/register google
 
 // Triggers the Google OAuth flow
-router.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }));
+// router.get('/auth/google',
+//   passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // The callback after Google has authenticated the user
 router.post('/auth/google/callback', async (req, res) => {

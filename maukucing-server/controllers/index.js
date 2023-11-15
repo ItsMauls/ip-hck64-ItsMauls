@@ -182,5 +182,14 @@ module.exports = class Index {
             next(error)
         }
     }
+
+    static async myPosts(req,res,next) {
+        try {
+            const data = await Post.findAll({where : {userId : req.user.id}})
+            res.status(200).json(data)
+        } catch (error) {
+            next(error)
+        }
+    }
     
 }
