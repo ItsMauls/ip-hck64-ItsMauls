@@ -25,6 +25,7 @@ module.exports = ((err, req, res, next) => {
         break;
       case "Unauthorized" :
       case "JsonWebTokenError" :
+        console.log(err.message);
         res.status(401).json({msg : 'Unauthorized Error'})
         break
       case "AuthError" : 
