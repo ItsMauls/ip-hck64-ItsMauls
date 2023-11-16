@@ -3,7 +3,7 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 
 // const OAuthButton = () => {
-    
+
 //     const googleLogin = useGoogleLogin({
 //         onSuccess: async (codeResponse) => {
 //             try {
@@ -34,9 +34,10 @@ export const GoogleButton = () => {
     return (
     <>
     <div className='border border-black font-semibold bg-cyan-100 text-blue-400 rounded-lg w-5/6 my-4 mx-auto'>
-        <GoogleOAuthProvider clientId='289498511556-10kqmsngcufrce86dlh215ogs83g7mbl.apps.googleusercontent.com'>
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_APP_CLIENT_ID}>
         <GoogleLogin
             onSuccess={ async credentialResponse => {
+                
                 
                 try {
                     // console.log(credentialResponse.credential);

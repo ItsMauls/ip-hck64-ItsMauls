@@ -32,7 +32,7 @@ export const CommentForm = ({hideCommentSection, postId}) => {
     <form onSubmit={submitHandler}>
         <textarea onChange={inputHandler} name="comment" id="" cols={50}></textarea>
         <div className="grid grid-cols-5 mx-auto">
-        <button type="submit" className="mx-auto bg-blue-200 ml-2 text-center rounded-lg px-4">Enter {postId}</button>
+        <button type="submit" className="mx-auto bg-blue-200 ml-2 text-center rounded-lg px-4">Enter</button>
         </div>
     </form>
         <button onClick={() => hideCommentSection(false)} className="mx-auto bg-red-200 ml-2 text-center rounded-lg px-4">Cancel</button>
