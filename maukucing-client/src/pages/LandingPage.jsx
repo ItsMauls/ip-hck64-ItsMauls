@@ -1,9 +1,17 @@
 import { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
+// ToastContext.js
+
+
+import { useToast } from '../components/Toaster';
+
+
 import { GoogleButton } from '../components/OAuth'
 
 export const LandingPage = () => {
+    const { showToast } = useToast();
+
     const [input, setInput] = useState({
         username : '',
         email : '',
@@ -30,7 +38,7 @@ export const LandingPage = () => {
        
            navigate('/posts')
         } catch (error) {
-            console.log(error);
+            showToast(`Kesalahan: ${error.response ? error.response.data.msg : error.msg}`, "error");
         }
     }
     const loginForm = async(e) => {
@@ -41,7 +49,8 @@ export const LandingPage = () => {
             localStorage.setItem('access_token', data.access_token)
             navigate('/posts')
         } catch (error) {
-            console.log(error);
+            console.log(error.response);
+            showToast(`Kesalahan: ${error.response ? error.response.data.msg : error.msg}`, "error");
         }
     }
 
