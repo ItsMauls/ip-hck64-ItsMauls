@@ -5,9 +5,11 @@ import { LandingPage } from "./pages/LandingPage";
 import { MyPosts } from "./pages/MyPosts";
 import { CommentForm } from "./components/CommentForm";
 import { CommentSection } from "./components/CommentSection";
+import { Cats } from "./pages/Cats";
+import ChatWithGPT from "./pages/AskCat";
 
 const loader = async () => {
-  if(!localStorage.access_token) return redirect('/login')
+  if(!localStorage.access_token) return redirect('/')
   return null
 }
 const throwToPosts = async () => {
@@ -28,6 +30,15 @@ export const router = createBrowserRouter([
         path : '/myposts',
         element : < MyPosts />,
         loader
+      },
+      {
+        path : '/cats',
+        element : < Cats />,
+        loader
+      },
+      {
+        path : '/ask',
+        element : < ChatWithGPT />
       }
     ]},
     {

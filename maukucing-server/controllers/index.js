@@ -1,4 +1,6 @@
 const {User, Post, Upvote, Comment} = require('../models/index')
+const OpenAI = require('openai');
+const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
 module.exports = class Index {
     static async getPosts(req,res,next) {
@@ -69,47 +71,7 @@ module.exports = class Index {
         }
     }
 
-    // static async updatePost(req,res,next) {
-    //     try {
-    //         const { id } = req.params
-    //         const {caption} = req.body
-    //         const updateImageUrl = req.user.uploadedImgUrl
-    //         body.imageUrl = imageUrl
-    //         const selectedPost = await Article.findByPk(id)
 
-    //         const body = {
-    //             caption,
-    //             imageUrl : updateImageUrl
-    //         }
-
-    //         if(!selectedPost) {
-    //             throw {name : 'NotFoundError', id}
-    //         }
-
-    //         if(!caption) {
-    //             throw {name : 'RequestBodyNotFound'}
-    //         }
-
-    //         if(!imageUrl) {
-    //             throw {name : 'RequestBodyNotFound'}
-    //         }
-           
-           
-           
-    //         await Article.update({body}, {
-    //             where : {
-    //                 id : id
-    //             }
-    //         })
-            
-    //         const updatedPost = await Article.findByPk(id)
-            
-    //         res.status(200).json(updatedPost)
-    //     } catch (error) {
-    //         next(error)
-            
-    //     }
-    // }
 
     static async deletePost(req,res,next) {
         try {
@@ -215,5 +177,63 @@ module.exports = class Index {
             next(error)
         }
     }
+
+    static async askGpt(req,res,next) {
+        try {
+            const ask = req.body.ask;
+            const response = await openai.chat.completions.create({
+              model: "gpt-3.5-turbo",
+              messages: [{ "role": "user", "content": ask }],
+            });
+            console.log(response.choices[0].message);
+            res.json({ assistant: response.choices[0].message.content });
+          } catch (error) {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+          }
+    }
     
 }
+
+
+    // static async updatePost(req,res,next) {
+    //     try {
+    //         const { id } = req.params
+    //         const {caption} = req.body
+    //         const updateImageUrl = req.user.uploadedImgUrl
+    //         body.imageUrl = imageUrl
+    //         const selectedPost = await Article.findByPk(id)
+
+    //         const body = {
+    //             caption,
+    //             imageUrl : updateImageUrl
+    //         }
+
+    //         if(!selectedPost) {
+    //             throw {name : 'NotFoundError', id}
+    //         }
+
+    //         if(!caption) {
+    //             throw {name : 'RequestBodyNotFound'}
+    //         }
+
+    //         if(!imageUrl) {
+    //             throw {name : 'RequestBodyNotFound'}
+    //         }
+           
+           
+           
+    //         await Article.update({body}, {
+    //             where : {
+    //                 id : id
+    //             }
+    //         })
+            
+    //         const updatedPost = await Article.findByPk(id)
+            
+    //         res.status(200).json(updatedPost)
+    //     } catch (error) {
+    //         next(error)
+            
+    //     }
+    // }
