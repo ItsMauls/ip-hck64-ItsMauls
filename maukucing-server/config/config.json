@@ -4,14 +4,17 @@
     "password": "postgres",
     "database": "maukucing_development",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "logging" : false
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
+    "username": "postgres",
+    "password": "postgres",
+    "database": "maukucing_tes",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres",
+    "port" : 5432,
+    "logging" : false
   },
   "production": {
     "username": "root",

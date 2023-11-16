@@ -1,4 +1,4 @@
-const {getPosts, getPostById, deletePost, createPost, updatePost, likePost, undoLike, commentPost, myPosts, seeComment, hotPosts } = require('../controllers/index')
+const {getPosts, getPostById, deletePost, createPost, updatePost, likePost, undoLike, commentPost, myPosts, seeComment, hotPosts, askGpt } = require('../controllers/index')
 const multer = require('multer')
 const imageUpload = require('../middleware/imageUpload')
 const router = require('express').Router()
@@ -19,3 +19,4 @@ router
 .get('/myposts', myPosts)
 .get('/comments/:postId', seeComment)
 .get('/hotposts', hotPosts)
+.post('/ask-gpt', askGpt)

@@ -55,7 +55,10 @@ export default function Navbar() {
           <Link to={'/myposts'} className="block px-3 text-black font-agbalumo text-xl semiold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">My Post</Link>
         </li>
         <li>
-          <Link to={'/myposts'} className="block px-3 text-black font-agbalumo text-xl semiold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Kucings</Link>
+          <Link to={'/cats'} className="block px-3 text-black font-agbalumo text-xl semiold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Kucings</Link>
+        </li>
+        <li>
+          <Link to={'/ask'} className="block px-3 text-black font-agbalumo text-xl semiold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Tanya Kucing</Link>
         </li>
       </ul>
     </div>
