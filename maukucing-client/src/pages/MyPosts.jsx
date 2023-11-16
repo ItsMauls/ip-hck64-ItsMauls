@@ -45,7 +45,6 @@ export const MyPosts = () => {
                         <img className="w-5/6 rounded-lg mx-auto" src={post.imageUrl} alt="" />
                         <h1 className="text-2xl">{post.caption}</h1>
                         <div>
-                            <button onClick={() => hideModal(true)}>Edit</button>
                             <button onClick={() => deleteHandler(post.id)} className="bg-red-500 rounded-full px-6 py-4 text-white">X</button>
                         </div>
                     </div>

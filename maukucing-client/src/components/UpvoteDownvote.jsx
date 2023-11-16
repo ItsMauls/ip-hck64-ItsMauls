@@ -21,7 +21,7 @@ export const UpvoteDownvoteButton = ({isUpvote, postId, setUpVote, totalLike}) =
         setUpVote(true)
         setUpdateLike(totalLike)
     }
-    console.log(updateLike);
+    
     return (
         <>
        {isUpvote ? <button className="py-1 my-2 rounded-lg bg-white px-4" onClick={upvote}><span>{updateLike}</span> ⬆️ Upvote</button> : <button className="rounded-lg px-4 py-1 my-2 bg-blue-400" onClick={undoUpvote}><span>{updateLike}</span> ⬇️ Downvote</button>} 

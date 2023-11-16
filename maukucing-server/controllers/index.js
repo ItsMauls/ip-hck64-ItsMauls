@@ -69,47 +69,48 @@ module.exports = class Index {
         }
     }
 
-    static async updatePost(req,res,next) {
-        try {
-            const { id } = req.params
-            const {caption} = req.body
-            const updateImageUrl = req.user.uploadedImgUrl
-            body.imageUrl = imageUrl
-            const selectedPost = await Article.findByPk(id)
+    // static async updatePost(req,res,next) {
+    //     try {
+    //         const { id } = req.params
+    //         const {caption} = req.body
+    //         const updateImageUrl = req.user.uploadedImgUrl
+    //         body.imageUrl = imageUrl
+    //         const selectedPost = await Article.findByPk(id)
 
-            const body = {
-                caption,
-                imageUrl : updateImageUrl
-            }
+    //         const body = {
+    //             caption,
+    //             imageUrl : updateImageUrl
+    //         }
 
-            if(!selectedPost) {
-                throw {name : 'NotFoundError', id}
-            }
+    //         if(!selectedPost) {
+    //             throw {name : 'NotFoundError', id}
+    //         }
 
-            if(!caption) {
-                throw {name : 'RequestBodyNotFound'}
-            }
+    //         if(!caption) {
+    //             throw {name : 'RequestBodyNotFound'}
+    //         }
 
-            if(!imageUrl) {
-                throw {name : 'RequestBodyNotFound'}
-            }
+    //         if(!imageUrl) {
+    //             throw {name : 'RequestBodyNotFound'}
+    //         }
            
            
            
-            await Article.update({body}, {
-                where : {
-                    id : id
-                }
-            })
+    //         await Article.update({body}, {
+    //             where : {
+    //                 id : id
+    //             }
+    //         })
             
-            const updatedPost = await Article.findByPk(id)
+    //         const updatedPost = await Article.findByPk(id)
             
-            res.status(200).json(updatedPost)
-        } catch (error) {
-            next(error)
+    //         res.status(200).json(updatedPost)
+    //     } catch (error) {
+    //         next(error)
             
-        }
-    }
+    //     }
+    // }
+
     static async deletePost(req,res,next) {
         try {
             const { id } = req.params
@@ -198,6 +199,18 @@ module.exports = class Index {
         try {
             const data = await Post.findAll({where : {userId : req.user.id}})
             res.status(200).json(data)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async hotPosts (req,res,next) {
+        try {
+            const posts = await Post.findAll({
+                order : [['upvotesCount', 'DESC']],
+                limit : 10
+            })
+            res.status(200).json(posts)
         } catch (error) {
             next(error)
         }

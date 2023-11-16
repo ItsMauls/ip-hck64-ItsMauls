@@ -7,9 +7,9 @@ export const ContentForm = ({hideModal, show}) => {
 
 
 useEffect(() => {
+
   const socket = openSocket('http://localhost:3000');
 
-  
   socket.on('new-post', newPost => {
       console.log('New post received:', newPost);
       // Update state or context as needed
