@@ -6,7 +6,7 @@ const htmlFormat = require('../helpers/htmlFormat.js');
 const { signToken } = require('../helpers/jwt.js');
 const { User } = require('../models/index.js')
 const { createTransport } = require('nodemailer');
-const passport = require('passport')
+
 
 
 module.exports = class AuthController {
@@ -51,6 +51,7 @@ module.exports = class AuthController {
               });
               const {email, password, username} = req.body
               const encPw = encryptedPw(password)
+              
             const data = await User.create({email, password : encPw, username})
 
             await transporter.sendMail({

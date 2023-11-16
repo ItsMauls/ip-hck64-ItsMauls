@@ -37,7 +37,7 @@ export const Content = ({hideCommentSection, openComment}) => {
             return (
             <>
             <div className="px-2 rounded-lg mx-4 py-4 bg-orange-50 my-4">
-            <h1 className="text-gray-200 block">Created at : {timeFormatter(val.createdAt)}</h1>
+            <h1 className="text-gray-400 block">Created at : {timeFormatter(val.createdAt)}</h1>
             <h1 key={val.id} className="float-left text-4xl mb-4">{val.caption}</h1>
             
             <div>

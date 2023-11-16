@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { textFormatter } from '../../helpers/textFormatter';
+import { Reload } from '../components/Reload';
 
 function ChatWithGPT() {
   const [query, setQuery] = useState({
     ask : ''
   });
   const [response, setResponse] = useState('');
+  const [loading, setLoading] = useState(false)
 
   const inputHandler = (e) => {
     const {value, name} = e.target
@@ -18,10 +21,11 @@ function ChatWithGPT() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      
+      setLoading(true)
       const res = await axios.post('http://localhost:3000/ask-gpt', {ask : query.ask}, {
         headers : {Authorization : `Bearer ${localStorage.access_token}`}
       });
+      setLoading(false)
       setResponse(res.data.assistant);
       console.log('masuk');
     } catch (error) {
@@ -40,7 +44,8 @@ function ChatWithGPT() {
         </div>
 
       </div>
-      <div dangerouslySetInnerHTML={{ __html: response }} />
+      {loading && < Reload/>}
+      <div dangerouslySetInnerHTML={{ __html: textFormatter(response) }} />
       <form onSubmit={handleSubmit}>
         <input 
           type="text"

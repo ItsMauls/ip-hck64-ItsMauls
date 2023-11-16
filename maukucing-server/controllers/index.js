@@ -149,10 +149,16 @@ module.exports = class Index {
     static async seeComment(req,res,next) {
         try {
             const {postId} = req.params
-            const comment = await Comment.findAll({where : {postId}})
-
+            const comment = await Comment.findAll({
+                where: { postId: postId },
+                include: [{
+                  model: User,
+                  as : 'user'
+                }]
+              });
             res.status(200).json(comment)
         } catch (error) {
+            console.log(error.message);
             next(error)
         }
     }

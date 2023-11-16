@@ -16,16 +16,21 @@ const destroyDatabase = async () => {
         })
         
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
     }
 }
 
 const destroyCreatedUser = async (userId) => {
-await User.destroy({
-    where : {
-        id : userId
+    try {
+        await User.destroy({
+            where : {},
+            truncate : true,
+            restartIdentity : true,
+            cascade : true
+        })
+    } catch (error) {
+        console.log(error.message);
     }
-})
 }
 
 module.exports = {destroyCreatedUser, destroyDatabase}

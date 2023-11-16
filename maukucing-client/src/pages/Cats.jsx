@@ -12,11 +12,11 @@ export const Cats = () => {
             setLoading(true)
             const {data} = await axios.get(url, {
                 headers: {
-                    "x-api-key": 'live_RLIcpYSS4rELop5trjdlipouHHo1jkiLyLttAQRDQrMsCrDb5aeDiOcUI9k7j0Kp',
+                    "x-api-key": import.meta.env.VITE_CATS,
                   }
                 })
-                setLoading(false)
                 setCats(data)
+                setLoading(false)
         }
         asyncFn()
     }, [])
